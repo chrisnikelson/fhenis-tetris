@@ -12,9 +12,7 @@
             --bg-dark: #05080a;
             --bg-darker: #000000;
             --accent-primary: #d4af37;
-            /* Gold */
             --accent-secondary: #c0c0c0;
-            /* Silver */
             --text-glow: 0 0 15px rgba(212, 175, 55, 0.5);
             --border-glow: 0 0 20px rgba(212, 175, 55, 0.2);
             --glass-bg: rgba(5, 8, 10, 0.85);
@@ -25,6 +23,7 @@
             box-sizing: border-box;
             touch-action: none;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -39,7 +38,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Advanced Background */
             background-image:
                 radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -55,13 +53,13 @@
             height: 100vh;
             max-width: 1200px;
             margin: 0 auto;
-            align-items: center;
-            justify-content: flex-start;
             padding: 20px;
             position: relative;
+            align-items: center;
+            justify-content: flex-start;
         }
 
-        /* Header Section */
+        /* HEADER */
         #game-header {
             display: flex;
             flex-direction: column;
@@ -89,7 +87,7 @@
             line-height: 1.2;
         }
 
-        /* Main Game Area */
+        /* MAIN CONTENT */
         #main-content {
             display: flex;
             flex-direction: row;
@@ -99,93 +97,12 @@
             width: 100%;
             flex: 1;
             min-height: 0;
-            /* Important for flex scrolling */
         }
 
-        /* Responsive */
-        @media (max-width: 800px) {
-            #app {
-                padding: 5px;
-                padding-top: 5px;
-                padding-bottom: 10px;
-                height: 100vh;
-                overflow: hidden;
-                /* Prevent scrolling if everything fits */
-                justify-content: space-between;
-                /* Space out header, game, controls */
-            }
-
-            #game-header {
-                margin-bottom: 5px;
-                transform: scale(0.9);
-                /* Slightly smaller header on mobile */
-            }
-
-            .logo {
-                width: 50px;
-            }
-
-            h1.title {
-                font-size: 1.5rem;
-                letter-spacing: 3px;
-            }
-
-            #main-content {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-
-            /* Mobile Specific Ordering */
-            .side-panel.left {
-                order: 1;
-                flex-direction: row;
-                width: 100%;
-                justify-content: space-around;
-                /* Distribute stats evenly */
-                padding: 0 10px;
-                margin-bottom: 5px;
-            }
-
-            .side-panel.left .info-box {
-                padding: 5px 10px;
-                min-width: 60px;
-            }
-
-            .side-panel.left .info-box .label {
-                font-size: 0.6rem;
-            }
-
-            .side-panel.left .info-box .value {
-                font-size: 1rem;
-            }
-
-            .game-container {
-                order: 2;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                flex: 1;
-                /* Allow it to take available vertical space */
-                min-height: 0;
-            }
-
-            .side-panel.right {
-                display: none;
-            }
-
-            /* Hide next/controls on mobile */
-
-            canvas {
-                /* Aggressive sizing for "Full Screen" feel */
-                height: 65vh;
-                max-height: 65vh;
-                width: auto;
-                /* Maintain aspect ratio */
-                max-width: 95vw;
-                box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-            }
-        }
+        .game-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         canvas {
@@ -196,32 +113,12 @@
             display: block;
         }
 
+        /* SIDE PANELS */
         .side-panel {
             display: flex;
             flex-direction: column;
             gap: 15px;
             min-width: 140px;
-        }
-
-        @media (max-width: 800px) {
-            .side-panel {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                width: 100%;
-                max-width: 350px;
-                /* Match canvas width roughly */
-            }
-
-            .side-panel .info-box {
-                flex: 1;
-                min-width: 80px;
-                padding: 10px 5px;
-            }
-
-            .hide-on-mobile {
-                display: none !important;
-            }
         }
 
         .info-box {
@@ -249,11 +146,7 @@
             font-weight: 700;
         }
 
-
-
-
-
-        /* Buttons */
+        /* CONTROLS & UI */
         .btn {
             background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), transparent);
             border: 1px solid var(--accent-primary);
@@ -286,66 +179,8 @@
             align-items: center;
         }
 
-        /* Mobile Controls */
         #mobile-controls {
             display: none;
-        }
-
-        @media (max-width: 800px) {
-            #mobile-controls {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
-                width: 100%;
-                max-width: 400px;
-                margin-top: auto;
-                /* Push to bottom of flex container if space allows */
-                padding: 10px;
-            }
-
-            /* Custom Grid placement for ergonomics */
-            .btn-left {
-                grid-column: 1;
-                grid-row: 2;
-            }
-
-            .btn-down {
-                grid-column: 2;
-                grid-row: 2;
-            }
-
-            .btn-right {
-                grid-column: 3;
-                grid-row: 2;
-            }
-
-            .btn-rot {
-                grid-column: 4;
-                grid-row: 1;
-                grid-row-end: 3;
-                height: 100% !important;
-            }
-
-            /* Tall rotate button */
-            .btn-drop {
-                grid-column: 1 / span 3;
-                grid-row: 1;
-                height: 50px !important;
-            }
-
-            /* Wide Hard Drop */
-
-            .control-btn {
-                height: 60px;
-                font-size: 1.5rem;
-                border-radius: 12px;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(212, 175, 55, 0.3);
-            }
-
-            .hide-on-mobile {
-                display: none !important;
-            }
         }
 
         .control-btn {
@@ -369,7 +204,6 @@
             transform: scale(0.95);
         }
 
-        /* Large Touch Areas */
         .btn-left {
             grid-area: left;
         }
@@ -392,20 +226,19 @@
             color: var(--accent-secondary);
         }
 
-        /* Modals */
+        /* MODALS */
         .modal {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(13, 18, 25, 0.9);
+            background: rgba(13, 18, 25, 0.95);
             backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
             transition: opacity 0.3s;
             z-index: 1000;
         }
@@ -442,9 +275,139 @@
             margin: 0 2px;
         }
 
-        /* Utility */
         .hidden {
             display: none !important;
+        }
+
+        /* --- MOBILE RESPONSIVE OVERRIDES --- */
+        @media (max-width: 800px) {
+            #app {
+                padding: 10px;
+                padding-bottom: 10px;
+                justify-content: space-between;
+                overflow: hidden;
+            }
+
+            #game-header {
+                margin-bottom: 5px;
+                transform: scale(0.9);
+            }
+
+            .logo {
+                width: 40px;
+            }
+
+            h1.title {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+
+            #main-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                flex: 1;
+            }
+
+            .side-panel.right {
+                display: none !important;
+            }
+
+            .side-panel.left {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+                /* Overrides min-width */
+                min-width: 0;
+                padding: 0 5px;
+            }
+
+            .side-panel.left .info-box {
+                flex: 0 0 auto;
+                min-width: 0;
+                padding: 5px 15px;
+                font-size: 0.8rem;
+            }
+
+            .side-panel.left button {
+                display: none;
+            }
+
+            /* Hide sound button to save space if needed, or keep it */
+
+            .game-container {
+                width: 100%;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            canvas {
+                /* Maximized Mobile Canvas */
+                height: 60vh;
+                width: auto;
+                max-width: 95vw;
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            }
+
+            /* Mobile Controls Grid */
+            #mobile-controls {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+                width: 100%;
+                max-width: 400px;
+                padding: 0 10px 10px 10px;
+                margin: 0 auto;
+            }
+
+            .control-btn {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(212, 175, 55, 0.3);
+                border-radius: 12px;
+                height: 55px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.5rem;
+                color: #fff;
+                backdrop-filter: blur(5px);
+            }
+
+            .control-btn:active {
+                background: var(--accent-primary);
+                color: #000;
+            }
+
+            .btn-left {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .btn-down {
+                grid-column: 2;
+                grid-row: 2;
+            }
+
+            .btn-right {
+                grid-column: 3;
+                grid-row: 2;
+            }
+
+            .btn-rot {
+                grid-column: 4;
+                grid-row: 1;
+                grid-row-end: 3;
+                height: auto !important;
+            }
+
+            .btn-drop {
+                grid-column: 1 / span 3;
+                grid-row: 1;
+                height: 45px !important;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
