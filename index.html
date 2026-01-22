@@ -5,24 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>FHENIS TETRIS</title>
+    <title>FHENIX TETRIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #1a2332;
-            --bg-darker: #0d1219;
-            --accent-cyan: #00d9ff;
-            --accent-purple: #bd00ff;
-            --text-glow: 0 0 10px rgba(0, 217, 255, 0.7);
-            --border-glow: 0 0 15px rgba(0, 217, 255, 0.3);
-            --glass-bg: rgba(26, 35, 50, 0.85);
+            --bg-dark: #05080a;
+            --bg-darker: #000000;
+            --accent-primary: #d4af37;
+            /* Gold */
+            --accent-secondary: #c0c0c0;
+            /* Silver */
+            --text-glow: 0 0 15px rgba(212, 175, 55, 0.5);
+            --border-glow: 0 0 20px rgba(212, 175, 55, 0.2);
+            --glass-bg: rgba(5, 8, 10, 0.85);
             --font-main: 'Orbitron', sans-serif;
         }
 
         * {
             box-sizing: border-box;
             touch-action: none;
-            /* Prevent default touch actions like scaling/scrolling */
             user-select: none;
         }
 
@@ -30,7 +31,7 @@
             margin: 0;
             padding: 0;
             background-color: var(--bg-dark);
-            color: #fff;
+            color: #e0e0e0;
             font-family: var(--font-main);
             height: 100vh;
             width: 100vw;
@@ -38,12 +39,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Grid Background */
+            /* Advanced Background */
             background-image:
-                linear-gradient(rgba(0, 217, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 217, 255, 0.05) 1px, transparent 1px),
-                radial-gradient(circle at center, transparent 0%, var(--bg-darker) 100%);
-            background-size: 40px 40px, 40px 40px, 100% 100%;
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 50px 50px, 50px 50px;
+            background-position: center;
         }
 
         #app {
@@ -70,10 +72,10 @@
         }
 
         canvas {
-            background: rgba(13, 18, 25, 0.9);
-            border: 2px solid var(--accent-cyan);
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--accent-primary);
             box-shadow: var(--border-glow);
-            border-radius: 4px;
+            border-radius: 2px;
             display: block;
         }
 
@@ -107,21 +109,22 @@
 
         .info-box {
             background: var(--glass-bg);
-            border: 1px solid rgba(0, 217, 255, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-left: 2px solid var(--accent-primary);
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 0 4px 4px 0;
             text-align: center;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .label {
-            color: var(--accent-cyan);
-            font-size: 0.8rem;
+            color: var(--accent-primary);
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             margin-bottom: 5px;
-            text-shadow: 0 0 5px var(--accent-cyan);
+            opacity: 0.8;
         }
 
         .value {
@@ -135,15 +138,15 @@
             left: 50%;
             transform: translateX(-50%);
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            font-weight: 300;
             color: #fff;
+            letter-spacing: 10px;
             text-shadow:
-                0 0 10px var(--accent-cyan),
-                0 0 20px var(--accent-cyan),
-                0 0 40px var(--accent-cyan);
+                0 0 20px rgba(212, 175, 55, 0.3);
             white-space: nowrap;
             z-index: 0;
-            opacity: 0.8;
+            opacity: 0.9;
             pointer-events: none;
         }
 
@@ -159,22 +162,25 @@
 
         /* Buttons */
         .btn {
-            background: rgba(0, 217, 255, 0.1);
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            padding: 10px 20px;
+            background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), transparent);
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            padding: 12px 24px;
             font-family: var(--font-main);
-            font-weight: bold;
+            font-weight: 500;
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.2s;
-            border-radius: 4px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            border-radius: 0;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background: var(--accent-cyan);
+            background: var(--accent-primary);
             color: #000;
-            box-shadow: 0 0 15px var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
         }
 
         .btn-icon {
@@ -245,10 +251,9 @@
             grid-area: rot;
         }
 
-        .btn-drop {
-            grid-area: drop;
-            border-color: var(--accent-purple);
-            color: var(--accent-purple);
+        grid-area: drop;
+        border-color: var(--accent-secondary);
+        color: var(--accent-secondary);
         }
 
         /* Modals */
@@ -276,9 +281,11 @@
         .modal h2 {
             font-size: 3rem;
             color: #fff;
-            text-shadow: 0 0 20px var(--accent-purple);
+            text-shadow: 0 0 30px var(--accent-primary);
             margin-bottom: 2rem;
             text-align: center;
+            letter-spacing: 5px;
+            font-weight: 300;
         }
 
         .modal p {
@@ -290,10 +297,10 @@
         }
 
         .key {
-            color: var(--accent-cyan);
-            border: 1px solid var(--accent-cyan);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
             padding: 2px 6px;
-            border-radius: 4px;
+            border-radius: 2px;
             font-size: 0.9em;
             margin: 0 2px;
         }
@@ -308,13 +315,13 @@
 <body>
 
     <footer
-        style="position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); z-index: 50; pointer-events: none;">
-        Built by Mr Daddy (Chris) <a href="https://x.com/cml01_" target="_blank"
-            style="color: var(--accent-cyan); text-decoration: none; pointer-events: auto;">@cml01_</a>
+        style="position: absolute; bottom: 15px; width: 100%; text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); z-index: 50; pointer-events: none; letter-spacing: 1px;">
+        Designed by Mr Daddy (Chris) <a href="https://x.com/cml01_" target="_blank"
+            style="color: var(--accent-primary); text-decoration: none; pointer-events: auto; margin-left: 5px;">@cml01_</a>
     </footer>
 
     <div id="app">
-        <h1 class="title">FHENIS TETRIS</h1>
+        <h1 class="title">FHENIX TETRIS</h1>
 
         <!-- Left Panel (Hold/Stats) -->
         <div class="side-panel">
@@ -370,7 +377,7 @@
 
         <!-- Start Screen -->
         <div id="start-screen" class="modal">
-            <h2>FHENIS TETRIS</h2>
+            <h2>FHENIX TETRIS</h2>
             <p>
                 Desktop: Use Arrow Keys or Space<br>
                 Mobile: Swipe or Button Controls
@@ -382,7 +389,7 @@
         <!-- Game Over Screen -->
         <div id="game-over-screen" class="modal hidden">
             <h2>GAME OVER</h2>
-            <p>Final Score: <span id="final-score" style="color: var(--accent-cyan)">0</span></p>
+            <p>Final Score: <span id="final-score" style="color: var(--accent-primary)">0</span></p>
             <p style="font-size: 0.9rem; margin-bottom: 20px; opacity: 0.7;">Created by Mr Daddy (Chris)</p>
             <button class="btn" onclick="game.reset()">PLAY AGAIN</button>
         </div>
@@ -533,7 +540,7 @@
                     level: 1,
                     next: null
                 };
-                this.highScore = localStorage.getItem('fhenis_highscore') || 0;
+                this.highScore = localStorage.getItem('fhenix_highscore') || 0;
                 document.getElementById('high-score').innerText = this.highScore;
 
                 this.dropCounter = 0;
@@ -691,7 +698,7 @@
                         particles.push(new Particle(
                             Math.random() * canvas.width * 20, // Scaled coordinate approximation
                             y * 20,
-                            '#00d9ff'
+                            '#d4af37'
                         ));
                     }
                 }
@@ -719,7 +726,7 @@
 
                 if (this.player.score > this.highScore) {
                     this.highScore = this.player.score;
-                    localStorage.setItem('fhenis_highscore', this.highScore);
+                    localStorage.setItem('fhenix_highscore', this.highScore);
                     document.getElementById('high-score').innerText = this.highScore;
                 }
 
