@@ -105,17 +105,20 @@
         /* Responsive */
         @media (max-width: 800px) {
             #app {
-                padding: 10px;
-                padding-bottom: 80px;
-                /* Space for footer/controls */
-                height: 100%;
-                min-height: 100vh;
-                overflow-y: auto;
-                justify-content: flex-start;
+                padding: 5px;
+                padding-top: 5px;
+                padding-bottom: 10px;
+                height: 100vh;
+                overflow: hidden;
+                /* Prevent scrolling if everything fits */
+                justify-content: space-between;
+                /* Space out header, game, controls */
             }
 
             #game-header {
-                margin-bottom: 15px;
+                margin-bottom: 5px;
+                transform: scale(0.9);
+                /* Slightly smaller header on mobile */
             }
 
             .logo {
@@ -138,11 +141,33 @@
                 order: 1;
                 flex-direction: row;
                 width: 100%;
-                justify-content: center;
+                justify-content: space-around;
+                /* Distribute stats evenly */
+                padding: 0 10px;
+                margin-bottom: 5px;
+            }
+
+            .side-panel.left .info-box {
+                padding: 5px 10px;
+                min-width: 60px;
+            }
+
+            .side-panel.left .info-box .label {
+                font-size: 0.6rem;
+            }
+
+            .side-panel.left .info-box .value {
+                font-size: 1rem;
             }
 
             .game-container {
                 order: 2;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                flex: 1;
+                /* Allow it to take available vertical space */
+                min-height: 0;
             }
 
             .side-panel.right {
@@ -152,10 +177,15 @@
             /* Hide next/controls on mobile */
 
             canvas {
-                max-height: 50vh;
+                /* Aggressive sizing for "Full Screen" feel */
+                height: 65vh;
+                max-height: 65vh;
                 width: auto;
-                max-width: 100%;
+                /* Maintain aspect ratio */
+                max-width: 95vw;
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
             }
+        }
         }
 
         canvas {
