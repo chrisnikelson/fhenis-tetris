@@ -50,24 +50,111 @@
 
         #app {
             display: flex;
-            flex-direction: row;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
+            flex-direction: column;
             width: 100%;
-            height: 90vh;
-            justify-content: center;
+            height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
             align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
             position: relative;
         }
 
-        /* Responsive Layouts */
+        /* Header Section */
+        #game-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+        }
+
+        h1.title {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 8px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Main Game Area */
+        #main-content {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            /* Important for flex scrolling */
+        }
+
+        /* Responsive */
         @media (max-width: 800px) {
             #app {
-                flex-direction: column;
-                height: 100vh;
                 padding: 10px;
-                gap: 10px;
+                padding-bottom: 80px;
+                /* Space for footer/controls */
+                height: 100%;
+                min-height: 100vh;
+                overflow-y: auto;
+                justify-content: flex-start;
+            }
+
+            #game-header {
+                margin-bottom: 15px;
+            }
+
+            .logo {
+                width: 50px;
+            }
+
+            h1.title {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+
+            #main-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            /* Mobile Specific Ordering */
+            .side-panel.left {
+                order: 1;
+                flex-direction: row;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .game-container {
+                order: 2;
+            }
+
+            .side-panel.right {
+                display: none;
+            }
+
+            /* Hide next/controls on mobile */
+
+            canvas {
+                max-height: 50vh;
+                width: auto;
+                max-width: 100%;
             }
         }
 
@@ -132,33 +219,9 @@
             font-weight: 700;
         }
 
-        h1.title {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            margin: 0;
-            font-size: 3rem;
-            font-weight: 300;
-            color: #fff;
-            letter-spacing: 10px;
-            text-shadow:
-                0 0 20px rgba(212, 175, 55, 0.3);
-            white-space: nowrap;
-            z-index: 0;
-            opacity: 0.9;
-            pointer-events: none;
-        }
 
-        @media (max-width: 800px) {
-            h1.title {
-                position: static;
-                transform: none;
-                font-size: 1.5rem;
-                margin-bottom: 5px;
-                order: -1;
-            }
-        }
+
+
 
         /* Buttons */
         .btn {
@@ -196,28 +259,70 @@
         /* Mobile Controls */
         #mobile-controls {
             display: none;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 10px;
-            gap: 10px;
-            grid-template-areas:
-                ". rot ."
-                "left down right"
-                ". drop .";
-            grid-template-columns: 1fr 1fr 1fr;
         }
 
         @media (max-width: 800px) {
             #mobile-controls {
                 display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                width: 100%;
+                max-width: 400px;
+                margin-top: auto;
+                /* Push to bottom of flex container if space allows */
+                padding: 10px;
+            }
+
+            /* Custom Grid placement for ergonomics */
+            .btn-left {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .btn-down {
+                grid-column: 2;
+                grid-row: 2;
+            }
+
+            .btn-right {
+                grid-column: 3;
+                grid-row: 2;
+            }
+
+            .btn-rot {
+                grid-column: 4;
+                grid-row: 1;
+                grid-row-end: 3;
+                height: 100% !important;
+            }
+
+            /* Tall rotate button */
+            .btn-drop {
+                grid-column: 1 / span 3;
+                grid-row: 1;
+                height: 50px !important;
+            }
+
+            /* Wide Hard Drop */
+
+            .control-btn {
+                height: 60px;
+                font-size: 1.5rem;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(212, 175, 55, 0.3);
+            }
+
+            .hide-on-mobile {
+                display: none !important;
             }
         }
 
         .control-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(0, 217, 255, 0.3);
-            border-radius: 50%;
-            width: 60px;
+            border-radius: 15px;
+            width: 100%;
             height: 60px;
             display: flex;
             justify-content: center;
@@ -251,9 +356,10 @@
             grid-area: rot;
         }
 
-        grid-area: drop;
-        border-color: var(--accent-secondary);
-        color: var(--accent-secondary);
+        .btn-drop {
+            grid-area: drop;
+            border-color: var(--accent-secondary);
+            color: var(--accent-secondary);
         }
 
         /* Modals */
@@ -271,6 +377,7 @@
             align-items: center;
             z-index: 100;
             transition: opacity 0.3s;
+            z-index: 1000;
         }
 
         .modal.hidden {
@@ -315,65 +422,72 @@
 <body>
 
     <footer
-        style="position: absolute; bottom: 15px; width: 100%; text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); z-index: 50; pointer-events: none; letter-spacing: 1px;">
+        style="width: 100%; text-align: center; font-size: 0.7rem; color: rgba(255, 255, 255, 0.3); padding: 10px 0; margin-top: auto; z-index: 50; letter-spacing: 1px;">
         Designed by Mr Daddy (Chris) <a href="https://x.com/cml01_" target="_blank"
-            style="color: var(--accent-primary); text-decoration: none; pointer-events: auto; margin-left: 5px;">@cml01_</a>
+            style="color: var(--accent-primary); text-decoration: none; margin-left: 5px;">@cml01_</a>
     </footer>
 
     <div id="app">
-        <h1 class="title">FHENIX TETRIS</h1>
-
-        <!-- Left Panel (Hold/Stats) -->
-        <div class="side-panel">
-            <div class="info-box">
-                <div class="label">SCORE</div>
-                <div class="value" id="score">0</div>
-            </div>
-            <div class="info-box">
-                <div class="label">HIGH</div>
-                <div class="value" id="high-score">0</div>
-            </div>
-            <div class="info-box">
-                <div class="label">LEVEL</div>
-                <div class="value" id="level">1</div>
-            </div>
-
-            <button id="sound-btn" class="btn btn-icon" onclick="audio.toggle()">🔊</button>
+        <!-- Header -->
+        <div id="game-header">
+            <img src="./logo.jpg" class="logo" alt="Fhenix Logo">
+            <h1 class="title">FHENIX TETRIS</h1>
         </div>
 
-        <!-- Game Canvas -->
-        <div style="position: relative;">
-            <canvas id="tetris" width="240" height="400"></canvas>
-        </div>
-
-        <!-- Right Panel (Next) -->
-        <div class="side-panel">
-            <div class="info-box">
-                <div class="label">NEXT</div>
-                <canvas id="next" width="100" height="100"
-                    style="width: 100px; height: 100px; background: transparent; border: none; box-shadow: none;"></canvas>
-            </div>
-            <div class="info-box hide-on-mobile">
-                <div class="label">CONTROLS</div>
-                <div style="font-size: 0.8rem; text-align: left; line-height: 1.8;">
-                    <span class="key">←</span> <span class="key">→</span> Move<br>
-                    <span class="key">↑</span> Rotate<br>
-                    <span class="key">↓</span> Soft Drop<br>
-                    <span class="key">SPACE</span> Hard Drop<br>
-                    <span class="key">P</span> Pause
+        <!-- Main Content Wrapper -->
+        <div id="main-content">
+            <!-- Left Panel (Stats) -->
+            <div class="side-panel left">
+                <div class="info-box">
+                    <div class="label">SCORE</div>
+                    <div class="value" id="score">0</div>
                 </div>
+                <div class="info-box">
+                    <div class="label">HIGH</div>
+                    <div class="value" id="high-score">0</div>
+                </div>
+                <div class="info-box">
+                    <div class="label">LEVEL</div>
+                    <div class="value" id="level">1</div>
+                </div>
+                <button id="sound-btn" class="btn btn-icon" onclick="audio.toggle()">🔊</button>
             </div>
-            <button id="pause-btn" class="btn" onclick="game.togglePause()">PAUSE</button>
+
+            <!-- Game Canvas -->
+            <div class="game-container">
+                <canvas id="tetris" width="240" height="400"></canvas>
+            </div>
+
+            <!-- Right Panel (Next/Controls) -->
+            <div class="side-panel right">
+                <div class="info-box">
+                    <div class="label">NEXT</div>
+                    <canvas id="next" width="100" height="100" style="width: 100px; height: 100px;"></canvas>
+                </div>
+                <div class="info-box hide-on-mobile">
+                    <div class="label">CONTROLS</div>
+                    <div style="font-size: 0.8rem; text-align: left; line-height: 1.8;">
+                        <span class="key">←</span> <span class="key">→</span> Move<br>
+                        <span class="key">↑</span> Rotate<br>
+                        <span class="key">↓</span> Soft Drop<br>
+                        <span class="key">SPACE</span> Hard Drop<br>
+                        <span class="key">P</span> Pause
+                    </div>
+                </div>
+                <button id="pause-btn" class="btn" onclick="game.togglePause()">PAUSE</button>
+            </div>
+
+            <!-- Mobile Controls (Moved inside Main Content for flow, visible only on mobile) -->
+            <div id="mobile-controls">
+                <div class="control-btn btn-drop" data-key="drop">HARD DROP</div>
+                <div class="control-btn btn-left" data-key="left">←</div>
+                <div class="control-btn btn-down" data-key="down">↓</div>
+                <div class="control-btn btn-right" data-key="right">→</div>
+                <div class="control-btn btn-rot" data-key="rotate">↻</div>
+            </div>
         </div>
 
-        <!-- Mobile Controls Overlay (Grid) -->
-        <div id="mobile-controls">
-            <div class="control-btn btn-rot" data-key="rotate">↻</div>
-            <div class="control-btn btn-left" data-key="left">←</div>
-            <div class="control-btn btn-down" data-key="down">↓</div>
-            <div class="control-btn btn-right" data-key="right">→</div>
-            <div class="control-btn btn-drop" data-key="drop">⤓</div>
-        </div>
+
 
         <!-- Start Screen -->
         <div id="start-screen" class="modal">
